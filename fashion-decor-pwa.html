@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Fashion Decor"/>
+<meta name="theme-color" content="#2C1506"/>
+<title>Fashion Decor</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%232C1506'/%3E%3Ccircle cx='90' cy='90' r='68' fill='%23D4A017'/%3E%3Ctext x='90' y='112' text-anchor='middle' font-size='56' font-weight='900' font-family='Georgia,serif' fill='%233B1F0A'%3EFD%3C/text%3E%3C/svg%3E"/>
+<style>
+:root{
+  --bg:#E8DCC8;--sidebar:#2C1506;--card:#fff;
+  --gold:#D4A017;--dark:#3B1F0A;--mid:#7A6040;
+  --border:#C9B48A;--row-alt:#FDFAF4;--row-head:#F0E6CE;
+  --danger:#B83A2A;--success:#4A7A3A;--warn:#A07010;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+  --sidebar-w:min(220px,30vw);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{font-size:clamp(14px,1.8vw,16px);height:100%;height:-webkit-fill-available;}
+body{height:100%;height:-webkit-fill-available;font-family:-apple-system,system-ui,"Segoe UI",sans-serif;background:var(--sidebar);overflow:hidden;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;touch-action:manipulation;}
+input,select{font-family:inherit;font-size:16px;}
+input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border-radius:4px;}
+
+/* ── App ── */
+#app{display:flex;flex-direction:column;height:100dvh;}
+
+/* ── Login ── */
+#login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;background:var(--sidebar);padding:32px 20px;}
+.lc{width:80px;height:80px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.lc span{font-size:34px;font-weight:900;color:var(--dark);font-family:Georgia,serif;}
+.lb{font-family:Georgia,serif;font-size:26px;letter-spacing:.18em;color:#fff;text-align:center;}
+.ls{font-size:12px;letter-spacing:.4em;color:var(--gold);text-align:center;margin-top:-2px;}
+.lcard{background:#3B1F0A;border:1px solid #5A3A18;border-radius:8px;padding:24px;width:100%;max-width:360px;margin-top:20px;}
+.fl{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;display:block;}
+.fr{display:flex;align-items:center;gap:8px;border-bottom:1px solid #7A6040;padding-bottom:5px;margin-bottom:16px;}
+.fr input{background:transparent;border:none;color:#fff;flex:1;font-size:16px;outline:none;}
+.fr svg{color:#C9B48A;flex-shrink:0;}
+.btn-in{width:100%;background:var(--gold);color:var(--dark);border-radius:6px;padding:12px;font-weight:800;font-size:15px;letter-spacing:.08em;}
+.err{background:#4A1010;border:1px solid #8A2020;color:#F0A0A0;font-size:12px;border-radius:4px;padding:8px 10px;margin-bottom:12px;}
+.quote-box{max-width:360px;text-align:center;margin:18px auto 0;min-height:56px;display:flex;align-items:center;justify-content:center;}
+.quote-text{font-family:Georgia,serif;font-size:14px;color:#C9B48A;font-style:italic;line-height:1.7;}
+.quote-author{font-size:10px;color:#7A6040;letter-spacing:.08em;margin-top:4px;}
+
+/* ── Desktop ── */
+#shell{display:none;height:100dvh;}
+#sidebar{width:var(--sidebar-w);background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;border-right:1px solid #4A2A10;}
+#sh{padding:20px 16px 16px;border-bottom:1px solid #4A2A10;display:flex;align-items:center;gap:10px;}
+.sl{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sl span{font-size:15px;font-weight:900;color:var(--dark);font-family:Georgia,serif;}
+.sbb{font-family:Georgia,serif;font-size:16px;color:#fff;letter-spacing:.1em;}
+.ssb{font-size:9px;color:var(--gold);letter-spacing:.35em;margin-top:-2px;}
+#sidebar nav{flex:1;padding-top:8px;overflow-y:auto;}
+.nb{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;font-size:13px;color:#C9B48A;border-left:3px solid transparent;text-align:left;transition:background .12s;}
+.nb:hover{background:#3B1F0A;color:#E8DCC8;}
+.nb.active{background:#3B1F0A;color:#fff;border-left-color:var(--gold);}
+.nb .ni{display:flex;align-items:center;gap:10px;}
+.ndot{background:var(--danger);color:#fff;font-size:10px;border-radius:99px;padding:1px 7px;font-weight:700;}
+#sf{padding:14px 16px;border-top:1px solid #4A2A10;font-size:11px;color:#7A6040;}
+#sf span{color:#E8DCC8;}#sf button{color:var(--gold);font-size:11px;text-decoration:underline;margin-top:4px;display:block;}
+#main{flex:1;overflow-y:auto;background:var(--bg);padding:clamp(12px,2vw,28px) clamp(14px,2.5vw,32px);}
+#tbd{background:var(--card);border-bottom:1px solid var(--border);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.tbt{font-family:Georgia,serif;font-size:20px;color:var(--dark);}
+.tbr{display:flex;align-items:center;gap:12px;}
+.tbb{background:var(--danger);color:#fff;font-size:11px;border-radius:99px;padding:3px 10px;font-weight:700;}
+.tbu{font-size:12px;color:var(--mid);}
+
+/* ── Mobile ── */
+#ms{display:none;flex-direction:column;height:100%;height:100dvh;min-height:-webkit-fill-available;}
+#tm{background:var(--sidebar);padding:calc(var(--safe-top) + 10px) 16px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tml{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tml span{font-size:13px;font-weight:900;color:var(--dark);font-family:Georgia,serif;}
+.tmt{font-family:Georgia,serif;font-size:15px;color:#fff;flex:1;}
+.tmb{background:var(--danger);color:#fff;font-size:10px;border-radius:99px;padding:2px 7px;font-weight:700;}
+#cm{flex:1;overflow-y:auto;background:var(--bg);padding:12px;-webkit-overflow-scrolling:touch;}
+#bn{
+  background:var(--sidebar);
+  border-top:1px solid #4A2A10;
+  display:flex;
+  flex-shrink:0;
+  padding-bottom:env(safe-area-inset-bottom, 16px);
+  padding-bottom:max(env(safe-area-inset-bottom, 0px), 8px);
+}
+#bn::after{
+  content:'';
+  display:block;
+  height:env(safe-area-inset-bottom, 0px);
+  background:var(--sidebar);
+}
+.bi{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 10px;gap:3px;font-size:10px;color:#7A6040;position:relative;}
+.bi.active{color:var(--gold);}
+.bi.active::after{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:var(--gold);border-radius:0 0 3px 3px;}
+.bi svg{width:22px;height:22px;}
+.bdot{position:absolute;top:7px;right:calc(50% - 16px);width:7px;height:7px;background:var(--danger);border-radius:50%;}
+.fab{
+  position:fixed;
+  bottom:calc(env(safe-area-inset-bottom, 0px) + 72px);
+  right:18px;
+  width:54px;height:54px;
+  border-radius:50%;
+  background:var(--gold);
+  color:var(--dark);
+  font-size:26px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
+  z-index:100;
+}
+
+/* ── Responsive switch ── */
+@media(min-width:768px){#shell{display:flex;}#ms{display:none!important;}}
+@media(max-width:767px){#ms{display:flex;}#shell{display:none!important;}}
+
+/* ── Shared ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px;}
+.cp{padding:12px 14px;}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.tbl th{text-align:left;padding:10px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);background:var(--row-head);font-weight:700;white-space:nowrap;}
+.tbl th.r{text-align:right;}
+.tbl td{padding:10px 12px;color:var(--dark);border-bottom:1px solid #EFE5D0;vertical-align:middle;}
+.tbl td.r{text-align:right;}.tbl td.m{color:var(--mid);}.tbl td.b{font-weight:700;}.tbl td.d{color:var(--danger);font-weight:700;}
+.tbl tr:hover td{background:#FAF4E8;}
+.li-t{font-weight:600;color:var(--dark);font-size:14px;}
+.li-s{font-size:12px;color:var(--mid);margin-top:2px;}
+.li-r{display:flex;justify-content:space-between;align-items:center;}
+.dv{height:1px;background:#EFE5D0;margin:10px 0;}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:6px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;border:none;transition:opacity .12s;}
+.btn:hover{opacity:.88;}
+.bg{background:var(--gold);color:var(--dark);}
+.bd{background:var(--dark);color:#fff;}
+.bgh{background:var(--row-head);color:var(--mid);}
+.bda{background:var(--danger);color:#fff;}
+.bsm{padding:6px 12px;font-size:12px;}
+.fb{background:#FAF4E8;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.fg{display:grid;gap:10px;margin-bottom:12px;}
+.g2{grid-template-columns:1fr 1fr;}
+.g1{grid-template-columns:1fr;}
+.s2{grid-column:span 2;}
+.inp{border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-size:16px;background:#fff;color:var(--dark);width:100%;}
+.lbl{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:.09em;display:block;margin-bottom:3px;}
+.badge{display:inline-block;font-size:10px;padding:3px 8px;border-radius:99px;font-weight:700;}
+.bw{background:#FEF3DC;color:var(--warn);}.bo{background:#E6F0E0;color:var(--success);}.be{background:#FDEAEA;color:var(--danger);}
+.alert{background:#FDEAEA;border:1px solid #E0A0A0;border-radius:6px;padding:9px 12px;font-size:12px;color:var(--danger);margin-bottom:10px;}
+.kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+@media(min-width:768px){.kgrid{grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.kl{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.kv{font-family:Georgia,serif;font-size:24px;color:var(--dark);}
+.kv.sm{font-size:15px;}
+.g2c{display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:768px){.g2c{grid-template-columns:1fr 1fr;gap:16px;}}
+.c2{grid-column:span 1;}@media(min-width:768px){.c2{grid-column:span 2;}}
+.qi{width:64px;text-align:right;border:1px solid var(--border);border-radius:4px;padding:4px 6px;font-size:16px;font-family:inherit;}
+.spin{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--mid);font-size:13px;gap:10px;}
+@media print{
+  /* Esconder tudo excepto o documento */
+  body > *{display:none!important;}
+  #pa{
+    display:block!important;
+    position:absolute;left:0;top:0;
+    width:100%;min-height:100%;
+    padding:15mm 18mm;
+    background:#fff;
+    color:#3B1F0A;
+    font-size:12pt;
+  }
+  /* Remover URL, título e data que o browser coloca */
+  @page{
+    size:A4 portrait;
+    margin:0mm;
+  }
+  /* Remover URL, título e cabeçalhos que o browser adiciona */
+  @page :first{ margin:0mm; }
+  @page :left{ margin:0mm; }
+  @page :right{ margin:0mm; }
+  /* Garantir que tabelas não cortam linhas a meio */
+  table{page-break-inside:auto;}
+  tr{page-break-inside:avoid;page-break-after:auto;}
+  thead{display:table-header-group;}
+  /* Evitar corte de elementos */
+  .print-block{page-break-inside:avoid;}
+  /* Forçar fundo branco */
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+#pa{display:none;}
+/* Instrução extra para remover headers/footers — só funciona via JS antes de imprimir */
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</head>
+<body>
+<div id="pa"></div>
+<div id="app"></div>
+<script>
+// ══════════════════════════════════════════════
+// CONFIG SUPABASE
+// ══════════════════════════════════════════════
+const SUPA_URL="https://kapwibqcvdalcrtwyjvz.supabase.co";
+const SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcHdpYnFjdmRhbGNydHd5anZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NzA1MDYsImV4cCI6MjA5NzE0NjUwNn0.6A-KqaR2V4e3L6qyRWGx1IG0xXbsO7qvMyVKG-1pckk";
+
+// Token dinâmico — usa o JWT do utilizador autenticado quando disponível
+function getToken(){ return S.session ? S.session.access_token : SUPA_KEY; }
+
+async function sb(method,table,body,query){
+  const url=SUPA_URL+'/rest/v1/'+table+(query?'?'+query:'');
+  const r=await fetch(url,{
+    method,
+    headers:{
+      'apikey':SUPA_KEY,
+      'Authorization':'Bearer '+getToken(),
+      'Content-Type':'application/json',
+      'Prefer': method==='POST'?'return=representation':'',
+    },
+    body:body?JSON.stringify(body):undefined,
+  });
+  if(!r.ok){const e=await r.text();throw new Error(e);}
+  if(r.status===204)return null;
+  return r.json();
+}
+
+// Supabase Auth API
+async function authSignIn(email,password){
+  const r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=password',{
+    method:'POST',
+    headers:{'apikey':SUPA_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify({email,password}),
+  });
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error_description||d.msg||'Credenciais inválidas.');
+  return d;
+}
+async function authSignUp(email, password){
+  const r=await fetch(SUPA_URL+'/auth/v1/admin/users',{
+    method:'POST',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},
+    body:JSON.stringify({email,password,email_confirm:true}),
+  });
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.msg||d.message||'Erro ao criar utilizador.');
+  return d;
+}
+async function authUpdatePassword(newPass){
+  const r=await fetch(SUPA_URL+'/auth/v1/user',{
+    method:'PUT',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},
+    body:JSON.stringify({password:newPass}),
+  });
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.msg||d.message||'Erro ao actualizar senha.');
+  return d;
+}
+async function authListUsers(){
+  const r=await fetch(SUPA_URL+'/auth/v1/admin/users',{
+    method:'GET',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+getToken()},
+  });
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.msg||'Erro ao listar utilizadores.');
+  return d.users||[];
+}
+async function authDeleteUser(uid){
+  const r=await fetch(SUPA_URL+'/auth/v1/admin/users/'+uid,{
+    method:'DELETE',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+getToken()},
+  });
+  if(!r.ok){const d=await r.json();throw new Error(d.msg||'Erro ao remover utilizador.');}
+}
+async function authSetRole(email, role){
+  // Usa a função SQL set_role que já criámos
+  const r=await fetch(SUPA_URL+'/rest/v1/rpc/set_role',{
+    method:'POST',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},
+    body:JSON.stringify({user_email:email,user_role:role}),
+  });
+  if(!r.ok){const d=await r.json();throw new Error(d.message||'Erro ao definir role.');}
+}
+async function authSignOut(){
+  if(!S.session)return;
+  await fetch(SUPA_URL+'/auth/v1/logout',{
+    method:'POST',
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+S.session.access_token},
+  }).catch(()=>{});
+}
+
+// Obter role do utilizador (guardada em user_metadata.role)
+function getRole(session){
+  try{
+    const payload=JSON.parse(atob(session.access_token.split('.')[1]));
+    return (payload.user_metadata && payload.user_metadata.role) || 'funcionaria';
+  }catch(e){return 'funcionaria';}
+}
+const DB={
+  getStock:()=>sb('GET','stock',null,'order=nome.asc'),
+  addStock:d=>sb('POST','stock',d),
+  updStock:(id,d)=>sb('PATCH','stock',d,'id=eq.'+id),
+  delStock:id=>sb('DELETE','stock',null,'id=eq.'+id),
+  getAlugueis:()=>sb('GET','alugueis',null,'order=criado_em.desc'),
+  addAluguer:d=>sb('POST','alugueis',d),
+  updAluguer:(id,d)=>sb('PATCH','alugueis',d,'id=eq.'+id),
+  delAluguer:id=>sb('DELETE','alugueis',null,'id=eq.'+id),
+  getCotacoes:()=>sb('GET','cotacoes',null,'order=criado_em.desc'),
+  addCotacao:d=>sb('POST','cotacoes',d),
+  updCotacao:(id,d)=>sb('PATCH','cotacoes',d,'id=eq.'+id),
+  delCotacao:id=>sb('DELETE','cotacoes',null,'id=eq.'+id),
+  getCotItens:()=>sb('GET','cotacao_itens',null,'order=cotacao_id.asc'),
+  addCotItem:d=>sb('POST','cotacao_itens',d),
+  delCotItens:cid=>sb('DELETE','cotacao_itens',null,'cotacao_id=eq.'+cid),
+  getAluguerItens:()=>sb('GET','aluguer_itens',null,'order=aluguer_id.asc'),
+  addAluguerItem:d=>sb('POST','aluguer_itens',d),
+  delAluguerItens:aid=>sb('DELETE','aluguer_itens',null,'aluguer_id=eq.'+aid),
+  getCustos:(mes)=>sb('GET','custos',null,'mes=eq.'+mes+'&order=categoria.asc'),
+  addCusto:d=>sb('POST','custos',d),
+  updCusto:(id,d)=>sb('PATCH','custos',d,'id=eq.'+id),
+  delCusto:id=>sb('DELETE','custos',null,'id=eq.'+id),
+};
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+const today=()=>new Date().toISOString().slice(0,10);
+const fmtMZN=n=>Number(n||0).toLocaleString('pt-PT',{minimumFractionDigits:2,maximumFractionDigits:2})+' MT';
+const isMobile=()=>window.innerWidth<768;
+const ARMAZENS=['Armazém da Cidade','Armazém da Matola'];
+const yr=new Date().getFullYear();
+
+const I={
+  monitor:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+  stock:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`,
+  aluguer:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+  cotacoes:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+  print:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>`,
+  trash:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`,
+  warn:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  check:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`,
+  user:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  lock:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  loc:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  x:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+  sync:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>`,
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let S={
+  user:null, page:'monitor',
+  session:null, role:'funcionaria', // 'admin' ou 'funcionaria'
+  stock:[], alugueis:[], aluguerItens:[], cotacoes:[], cotItens:[],
+  defTab:'senha', defUsers:[], defLoading:false, defMsg:'', defErr:'',
+  custoMes: new Date().toISOString().slice(0,7),
+  loading:false, showForm:false,
+  fd:{}, fitens:[], filtro:'', ferr:'', ierr:'',
+};
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+function render(){
+  const app=document.getElementById('app');
+  if(!S.user){app.innerHTML=loginHTML();bindLogin();startQuotes();return;}
+  if(isMobile()){app.innerHTML=mobileHTML();bindPage();}
+  else{app.innerHTML=desktopHTML();bindPage();}
+}
+window.addEventListener('resize',()=>{if(S.user)render();});
+
+// ══════════════════════════════════════════════
+// LOAD DATA
+// ══════════════════════════════════════════════
+async function loadAll(){
+  S.loading=true;render();
+  try{
+    const [stock,alugueis,aluguerItens,cotacoes,cotItens]=await Promise.all([
+      DB.getStock(),DB.getAlugueis(),DB.getAluguerItens(),DB.getCotacoes(),DB.getCotItens()
+    ]);
+    S.stock=stock||[];S.alugueis=alugueis||[];S.aluguerItens=aluguerItens||[];
+    S.cotacoes=cotacoes||[];S.cotItens=cotItens||[];
+    // Carregar custos do mês actual se estivermos nessa página
+    if(S.page==='custos') await loadCustos(S.custoMes);
+  }catch(e){console.error(e);}
+  S.loading=false;render();
+}
+
+// ══════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════
+function loginHTML(){return `
+<div id="login">
+  <div class="lc"><span>FD</span></div>
+  <div class="lb">FASHION</div><div class="ls">DECOR</div>
+
+  <div class="quote-box">
+    <div>
+      <div class="quote-text" id="quote-text">&ldquo;&rdquo;</div>
+      <div class="quote-author" id="quote-author"></div>
+    </div>
+  </div>
+
+  <div class="lcard">
+    <div id="lerr"></div>
+    <label class="fl">Email</label>
+    <div class="fr">${I.user}<input id="lu" type="email" placeholder="ex: shabil@fashiondecor.com" autocomplete="email"/></div>
+    <label class="fl">Senha</label>
+    <div class="fr">${I.lock}<input id="lp" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
+    <button class="btn-in" id="btn-in">ENTRAR</button>
+    <p style="color:#7A6040;font-size:10px;text-align:center;margin-top:10px">Autenticação segura · Supabase · Maputo, Moçambique</p>
+  </div>
+
+  <div style="background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.3);border-radius:8px;padding:11px 14px;margin-top:14px;max-width:360px;font-size:11px;color:#C9B48A;line-height:1.6;text-align:center;">
+    📱 <strong style="color:var(--gold)">iPhone:</strong> Safari → Partilhar → "Adicionar ao ecrã inicial"&nbsp;&nbsp;
+    🖥️ <strong style="color:var(--gold)">Windows:</strong> Chrome → ícone ⊕ na barra de endereço
+  </div>
+</div>`;}
+
+// ── Frases rotativas ──
+const QUOTES=[
+  {t:'Um espaço bem decorado não imita a vida — ele inspira-a.',a:'Fashion Decor'},
+  {t:'Os detalhes não são os detalhes. São o design.',a:'Charles Eames'},
+  {t:'A decoração é a arte de contar histórias sem palavras.',a:'Fashion Decor'},
+  {t:'Cada evento merece um cenário à altura do momento.',a:'Fashion Decor'},
+  {t:'A beleza está em transformar o ordinário em extraordinário.',a:'Fashion Decor'},
+  {t:'Um ambiente bem pensado muda o humor de toda uma celebração.',a:'Fashion Decor'},
+  {t:'Decorar é dar alma aos espaços.',a:'Fashion Decor'},
+  {t:'A elegância não é ser notada, é ser lembrada.',a:'Giorgio Armani'},
+  {t:'Flores são o sorriso da natureza — usa-as com generosidade.',a:'Fashion Decor'},
+  {t:'O luxo está nos detalhes que poucos percebem mas todos sentem.',a:'Fashion Decor'},
+  {t:'Criar momentos inesquecíveis começa com um espaço inesquecível.',a:'Fashion Decor'},
+  {t:'A simplicidade é a sofisticação suprema.',a:'Leonardo da Vinci'},
+];
+let _qi=0;
+function startQuotes(){
+  const el=document.getElementById('quote-text');
+  const au=document.getElementById('quote-author');
+  if(!el||!au)return;
+  _qi=Math.floor(Math.random()*QUOTES.length);
+  el.textContent='\u201c'+QUOTES[_qi].t+'\u201d';
+  au.textContent='— '+QUOTES[_qi].a;
+}
+
+function bindLogin(){
+  const go=async()=>{
+    const email=document.getElementById('lu').value.trim();
+    const pass=document.getElementById('lp').value.trim();
+    const eEl=document.getElementById('lerr');
+    if(!email||!pass){eEl.innerHTML='<div class="err">Preenche email e senha.</div>';return;}
+    const btn=document.getElementById('btn-in');
+    btn.disabled=true;btn.textContent='A entrar...';
+    try{
+      const session=await authSignIn(email,pass);
+      S.session=session;
+      S.user=session.user.email;
+      S.role=getRole(session);
+      // definir página inicial conforme role
+      S.page=S.role==='admin'?'monitor':'stock';
+      await loadAll();
+    }catch(e){
+      eEl.innerHTML=`<div class="err">${e.message}</div>`;
+      btn.disabled=false;btn.textContent='ENTRAR';
+    }
+  };
+  document.getElementById('btn-in').onclick=go;
+  document.getElementById('lp').onkeydown=e=>{if(e.key==='Enter')go();};
+}
+
+// ══════════════════════════════════════════════
+// SHELLS
+// ══════════════════════════════════════════════
+const PTITLES={monitor:'Monitor geral',stock:'Stock & Armazéns',aluguer:'Material alugado',cotacoes:'Cotações',custos:'Custos operacionais',definicoes:'Definições'};
+const PTITLES_FUNC={stock:'Material disponível',aluguer:'Material fora'};
+const PICONS={
+  monitor:I.monitor,stock:I.stock,aluguer:I.aluguer,cotacoes:I.cotacoes,
+  custos:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  definicoes:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+};
+
+function desktopHTML(){
+  const isAdmin=S.role==='admin';
+  const low=S.stock.filter(s=>(s.qtd_cidade+s.qtd_matola)<=s.minimo).length;
+  const pages=isAdmin?['monitor','stock','aluguer','cotacoes','custos','definicoes']:['stock','aluguer'];
+  const pageTitle=isAdmin?PTITLES[S.page]:(PTITLES_FUNC[S.page]||PTITLES[S.page]);
+  return `
+<div id="shell" style="display:flex;">
+  <div id="sidebar">
+    <div id="sh"><div class="sl"><span>FD</span></div><div><div class="sbb">FASHION</div><div class="ssb">DECOR</div></div></div>
+    <nav>
+      ${pages.map(p=>`
+      <button class="nb ${S.page===p?'active':''}" onclick="goto('${p}')">
+        <span class="ni">${PICONS[p]} ${isAdmin?PTITLES[p]:PTITLES_FUNC[p]}</span>
+        ${p==='monitor'&&low>0?`<span class="ndot">${low}</span>`:''}
+      </button>`).join('')}
+    </nav>
+    <div id="sf">
+      <div style="margin-bottom:4px;font-size:11px;word-break:break-all">${S.user}</div>
+      <span class="badge ${isAdmin?'bo':'bm'}" style="margin-bottom:8px;display:inline-block">${isAdmin?'👑 Admin':'👤 Funcionária'}</span><br>
+      <button onclick="doLogout()">Terminar sessão</button>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+    <div id="tbd">
+      <div class="tbt">${pageTitle}</div>
+      <div class="tbr">
+        ${isAdmin&&low>0?`<span class="tbb">${low} alerta${low>1?'s':''}</span>`:''}
+        <button class="btn bgh bsm" onclick="loadAll()">${I.sync} Actualizar</button>
+        ${isAdmin?`<button class="btn bd bsm" onclick="S.showForm=!S.showForm;S.ferr='';S.ierr='';if(S.showForm)resetFD();render()">+ Novo</button>`:''}
+        <span class="tbu"><strong>${S.user}</strong></span>
+      </div>
+    </div>
+    <div id="main">${S.loading?spinnerHTML():pageHTML()}${footerHTML()}</div>
+  </div>
+</div>`;}
+
+function mobileHTML(){
+  const isAdmin=S.role==='admin';
+  const low=S.stock.filter(s=>(s.qtd_cidade+s.qtd_matola)<=s.minimo).length;
+  const pages=isAdmin?['monitor','stock','aluguer','cotacoes','custos','definicoes']:['stock','aluguer'];
+  const labels={monitor:'Monitor',stock:isAdmin?'Stock':'Disponível',aluguer:isAdmin?'Aluguer':'Fora',cotacoes:'Cotações',custos:'Custos',definicoes:'Def.'};
+  const pageTitle=isAdmin?PTITLES[S.page]:(PTITLES_FUNC[S.page]||PTITLES[S.page]);
+  return `
+<div id="ms" style="display:flex;">
+  <div id="tm">
+    <div class="tml"><span>FD</span></div>
+    <div class="tmt">${pageTitle}</div>
+    ${isAdmin&&low>0?`<span class="tmb">${low}</span>`:''}
+    <button onclick="loadAll()" style="color:var(--gold);margin-right:6px">${I.sync}</button>
+    <button onclick="doLogout()" style="color:#7A6040;font-size:12px">Sair</button>
+  </div>
+  <div id="cm">${S.loading?spinnerHTML():pageHTML()}${footerHTML()}</div>
+  <div id="bn">
+    ${pages.map(p=>`
+    <button class="bi ${S.page===p?'active':''}" onclick="goto('${p}')">
+      ${PICONS[p]}
+      ${p==='monitor'&&low>0?`<span class="bdot"></span>`:''}
+      <span>${labels[p]}</span>
+    </button>`).join('')}
+  </div>
+  ${isAdmin?`<button class="fab" onclick="S.showForm=!S.showForm;S.ferr='';S.ierr='';if(S.showForm)resetFD();render()">＋</button>`:''}
+</div>`;}
+
+async function doLogout(){
+  await authSignOut();
+  S.user=null;S.session=null;S.role='funcionaria';
+  S.stock=[];S.alugueis=[];S.cotacoes=[];S.cotItens=[];
+  S.page='stock';render();
+}
+window.goto=p=>{
+  const adminOnly=['monitor','cotacoes','custos','definicoes'];
+  if(adminOnly.includes(p)&&S.role!=='admin')return;
+  S.page=p;S.showForm=false;S.filtro='';S.ferr='';S.ierr='';
+  if(p==='custos'){loadCustos(S.custoMes).then(()=>render());return;}
+  render();
+};
+function resetFD(){S.fd={armazem:ARMAZENS[0],qtd:1,dataSaida:today()};S.fitens=[];S.fitensAl=[];}
+function spinnerHTML(){return `<div class="spin">${I.sync} A carregar dados do servidor...</div>`;}
+// ══════════════════════════════════════════════
+// CUSTOS OPERACIONAIS
+// ══════════════════════════════════════════════
+const CATS_FIXAS=[
+  {key:'salarios',   label:'Salários',         emoji:'👥'},
+  {key:'renda',      label:'Renda / Aluguer',  emoji:'🏠'},
+  {key:'energia',    label:'Energia eléctrica',emoji:'⚡'},
+  {key:'agua',       label:'Água',             emoji:'💧'},
+  {key:'sunlight',   label:'Sunlight / Internet',emoji:'📡'},
+  {key:'combustivel',label:'Combustível',      emoji:'⛽'},
+  {key:'yango',      label:'Yango / Transporte',emoji:'🚗'},
+  {key:'outros',     label:'Outros',           emoji:'📦'},
+];
+
+let _custos=[];
+let _custosLoading=false;
+
+async function loadCustos(mes){
+  _custosLoading=true;
+  try{ _custos=await DB.getCustos(mes)||[]; }
+  catch(e){ _custos=[]; }
+  _custosLoading=false;
+}
+
+function custosHTML(){
+  const mes=S.custoMes;
+  const total=_custos.reduce((s,c)=>s+Number(c.valor||0),0);
+
+  // Agrupar por categoria
+  const porCat={};
+  _custos.forEach(c=>{ if(!porCat[c.categoria])porCat[c.categoria]=[]; porCat[c.categoria].push(c); });
+
+  // Selector de mês
+  const meses=[];
+  for(let i=0;i<12;i++){
+    const d=new Date(); d.setMonth(d.getMonth()-i);
+    meses.push(d.toISOString().slice(0,7));
+  }
+
+  return`
+  <!-- Selector de mês -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+    <select class="inp" id="sel-mes" style="max-width:200px;font-weight:600" onchange="changeMes(this.value)">
+      ${meses.map(m=>`<option value="${m}" ${m===mes?'selected':''}>${m}</option>`).join('')}
+    </select>
+    <div style="font-family:Georgia,serif;font-size:18px;color:var(--dark)">
+      Total: <span style="color:var(--danger)">${fmtMZN(total)}</span>
+    </div>
+  </div>
+
+  ${_custosLoading?spinnerHTML():''}
+
+  <!-- Cards por categoria -->
+  <div style="display:grid;grid-template-columns:1fr;gap:12px">
+    ${CATS_FIXAS.map(cat=>{
+      const itens=porCat[cat.key]||[];
+      const subtotal=itens.reduce((s,c)=>s+Number(c.valor||0),0);
+      return`
+      <div class="card">
+        <div class="cp">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${itens.length>0?'10px':'0'}">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:20px">${cat.emoji}</span>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--dark)">${cat.label}</div>
+                ${subtotal>0?`<div style="font-size:12px;color:var(--danger);font-weight:600">${fmtMZN(subtotal)}</div>`:'<div style="font-size:11px;color:var(--border)">Sem registos</div>'}
+              </div>
+            </div>
+            <button onclick="addCustoForm('${cat.key}','${cat.label}')"
+              style="background:var(--row-head);border:none;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer">
+              + Adicionar
+            </button>
+          </div>
+          ${itens.map(c=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px dashed #EFE5D0;font-size:13px">
+            <div>
+              <div style="color:var(--dark)">${c.descricao||cat.label}</div>
+              ${c.notas?`<div style="font-size:11px;color:var(--mid)">${c.notas}</div>`:''}
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-weight:700;color:var(--danger)">${fmtMZN(c.valor)}</span>
+              <button onclick="delCustoItem('${c.id}')" style="color:var(--border);background:none;border:none;cursor:pointer">${I.trash}</button>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>`}).join('')}
+
+    <!-- Categoria personalizada -->
+    <div class="card"><div class="cp">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:20px">➕</span>
+          <div style="font-weight:700;font-size:14px;color:var(--mid)">Categoria personalizada</div>
+        </div>
+        <button onclick="addCustoForm('custom','')"
+          style="background:var(--row-head);border:none;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer">
+          + Adicionar
+        </button>
+      </div>
+      ${(porCat['custom']||[]).map(c=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px dashed #EFE5D0;font-size:13px">
+        <div>
+          <div style="color:var(--dark)">${c.descricao||'—'}</div>
+          ${c.notas?`<div style="font-size:11px;color:var(--mid)">${c.notas}</div>`:''}
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-weight:700;color:var(--danger)">${fmtMZN(c.valor)}</span>
+          <button onclick="delCustoItem('${c.id}')" style="color:var(--border);background:none;border:none;cursor:pointer">${I.trash}</button>
+        </div>
+      </div>`).join('')}
+    </div></div>
+  </div>
+
+  <!-- Modal inline para adicionar custo -->
+  <div id="custo-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:10px;padding:24px;width:100%;max-width:380px">
+      <div style="font-family:Georgia,serif;font-size:18px;color:var(--dark);margin-bottom:16px" id="modal-titulo">Adicionar custo</div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  `;
+}
+
+function bindCustos(){
+  // Já tratado via window.* functions
+}
+
+window.changeMes=async(mes)=>{
+  S.custoMes=mes;
+  await loadCustos(mes);
+  render();
+};
+
+window.addCustoForm=(cat,label)=>{
+  const isCustom=cat==='custom';
+  const modal=document.getElementById('custo-modal');
+  const titulo=document.getElementById('modal-titulo');
+  const body=document.getElementById('modal-body');
+  if(!modal||!titulo||!body)return;
+  titulo.textContent=isCustom?'Novo custo personalizado':`Adicionar — ${label}`;
+  body.innerHTML=`
+    <div class="fg g1" style="gap:12px;margin-bottom:14px">
+      ${isCustom?`<div><label class="lbl">Categoria / Descrição *</label><input class="inp" id="m-desc" placeholder="ex: Limpeza, Marketing..."/></div>`
+               :`<div><label class="lbl">Descrição</label><input class="inp" id="m-desc" placeholder="${label}" value="${label}"/></div>`}
+      <div><label class="lbl">Valor (MT) *</label><input class="inp" id="m-valor" type="number" min="0" placeholder="0.00"/></div>
+      <div><label class="lbl">Notas (opcional)</label><input class="inp" id="m-notas" placeholder="ex: Referência, mês..."/></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn bd bsm" onclick="saveCusto('${cat}')">Guardar</button>
+      <button class="btn bgh bsm" onclick="document.getElementById('custo-modal').style.display='none'">Cancelar</button>
+    </div>
+    <div id="m-err" style="margin-top:8px"></div>
+  `;
+  modal.style.display='flex';
+  document.getElementById('m-valor')?.focus();
+};
+
+window.saveCusto=async(cat)=>{
+  const desc=document.getElementById('m-desc')?.value.trim();
+  const valor=Number(document.getElementById('m-valor')?.value)||0;
+  const notas=document.getElementById('m-notas')?.value.trim();
+  const err=document.getElementById('m-err');
+  if(!desc){if(err)err.innerHTML='<div class="alert">Indique a descrição.</div>';return;}
+  if(valor<=0){if(err)err.innerHTML='<div class="alert">Indique um valor maior que zero.</div>';return;}
+  try{
+    await DB.addCusto({categoria:cat,descricao:desc,valor,notas:notas||null,mes:S.custoMes});
+    document.getElementById('custo-modal').style.display='none';
+    await loadCustos(S.custoMes);
+    render();
+  }catch(e){if(err)err.innerHTML=`<div class="alert">Erro: ${e.message}</div>`;}
+};
+
+window.delCustoItem=async id=>{
+  if(!confirm('Remover este registo?'))return;
+  try{await DB.delCusto(id);await loadCustos(S.custoMes);render();}
+  catch(e){alert('Erro: '+e.message);}
+};
+
+// ══════════════════════════════════════════════
+// DEFINIÇÕES
+// ══════════════════════════════════════════════
+function definicoesHTML(){
+  const tabBtn=(id,label)=>`
+    <button onclick="S.defTab='${id}';S.defMsg='';S.defErr='';render()"
+      style="padding:9px 18px;font-size:13px;font-weight:600;border:none;cursor:pointer;border-bottom:2px solid ${S.defTab===id?'var(--gold)':'transparent'};color:${S.defTab===id?'var(--gold)':'var(--mid)'};background:none;font-family:inherit;">
+      ${label}
+    </button>`;
+
+  const tabs=`
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px">
+    ${tabBtn('senha','Trocar senha')}
+    ${tabBtn('utilizadores','Utilizadores')}
+  </div>`;
+
+  // ── Tab: Trocar senha ──
+  const tabSenha=`
+  <div style="max-width:400px">
+    ${S.defErr?`<div class="alert">${S.defErr}</div>`:''}
+    ${S.defMsg?`<div class="alert-ok" style="background:#E6F0E0;border:1px solid #A0C090;border-radius:6px;padding:9px 12px;font-size:12px;color:var(--success);margin-bottom:10px">${S.defMsg}</div>`:''}
+    <div class="fg g1" style="gap:12px">
+      <div><label class="lbl">Nova senha</label><input class="inp" id="d-pass1" type="password" placeholder="mínimo 8 caracteres"/></div>
+      <div><label class="lbl">Confirmar nova senha</label><input class="inp" id="d-pass2" type="password" placeholder="repetir senha"/></div>
+    </div>
+    <button class="btn bd bsm" id="btn-change-pass" style="margin-top:4px">Actualizar senha</button>
+  </div>`;
+
+  // ── Tab: Utilizadores ──
+  const userList=S.defUsers.length===0
+    ?`<p style="color:var(--mid);font-size:13px;padding:20px 0">${S.defLoading?'A carregar...':'Clica em "Carregar utilizadores" para ver a lista.'}</p>`
+    :`<div class="card" style="margin-bottom:16px">
+      ${S.defUsers.map(u=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #EFE5D0">
+        <div>
+          <div style="font-weight:600;font-size:13px;color:var(--dark)">${u.email}</div>
+          <div style="font-size:11px;color:var(--mid)">Role: <strong>${u.user_metadata?.role||'funcionaria'}</strong> · criado ${u.created_at?u.created_at.slice(0,10):'—'}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="btn bgh bsm" onclick="toggleRole('${u.id}','${u.email}','${u.user_metadata?.role||'funcionaria'}')"
+            style="font-size:11px">${u.user_metadata?.role==='admin'?'→ Funcionária':'→ Admin'}</button>
+          ${u.email!==S.user?`<button onclick="removeUser('${u.id}')" style="color:var(--border);padding:4px">${I.trash}</button>`:''}
+        </div>
+      </div>`).join('')}
+    </div>`;
+
+  const tabUtilizadores=`
+  <div>
+    ${S.defErr?`<div class="alert">${S.defErr}</div>`:''}
+    ${S.defMsg?`<div style="background:#E6F0E0;border:1px solid #A0C090;border-radius:6px;padding:9px 12px;font-size:12px;color:var(--success);margin-bottom:10px">${S.defMsg}</div>`:''}
+
+    <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Adicionar novo utilizador</div>
+    <div class="fg g2" style="max-width:500px">
+      <div><label class="lbl">Email *</label><input class="inp" id="d-email" type="email" placeholder="email@exemplo.com"/></div>
+      <div><label class="lbl">Senha *</label><input class="inp" id="d-npass" type="password" placeholder="mínimo 8 caracteres"/></div>
+      <div><label class="lbl">Role</label>
+        <select class="inp" id="d-role">
+          <option value="funcionaria">👤 Funcionária</option>
+          <option value="admin">👑 Admin</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn bd bsm" id="btn-criar-user" style="margin-bottom:20px">Criar utilizador</button>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em">Utilizadores existentes</div>
+      <button class="btn bgh bsm" id="btn-load-users">Carregar lista</button>
+    </div>
+    ${userList}
+  </div>`;
+
+  return`
+  <div style="max-width:700px">
+    ${tabs}
+    ${S.defTab==='senha'?tabSenha:tabUtilizadores}
+  </div>`;}
+
+function bindDefinicoes(){
+  // Tab senha
+  const btnPass=document.getElementById('btn-change-pass');
+  if(btnPass)btnPass.onclick=async()=>{
+    const p1=document.getElementById('d-pass1')?.value.trim();
+    const p2=document.getElementById('d-pass2')?.value.trim();
+    if(!p1||p1.length<8){S.defErr='A senha deve ter pelo menos 8 caracteres.';render();return;}
+    if(p1!==p2){S.defErr='As senhas não coincidem.';render();return;}
+    btnPass.disabled=true;btnPass.textContent='A actualizar...';
+    try{
+      await authUpdatePassword(p1);
+      S.defErr='';S.defMsg='Senha actualizada com sucesso!';render();
+    }catch(e){S.defErr='Erro: '+e.message;render();btnPass.disabled=false;}
+  };
+
+  // Tab utilizadores — carregar lista
+  const btnLoad=document.getElementById('btn-load-users');
+  if(btnLoad)btnLoad.onclick=async()=>{
+    S.defLoading=true;btnLoad.textContent='A carregar...';btnLoad.disabled=true;
+    try{S.defUsers=await authListUsers();S.defErr='';}
+    catch(e){S.defErr='Erro ao carregar: '+e.message;}
+    S.defLoading=false;render();
+  };
+
+  // Criar utilizador
+  const btnCriar=document.getElementById('btn-criar-user');
+  if(btnCriar)btnCriar.onclick=async()=>{
+    const email=document.getElementById('d-email')?.value.trim();
+    const pass=document.getElementById('d-npass')?.value.trim();
+    const role=document.getElementById('d-role')?.value;
+    if(!email){S.defErr='Indique o email.';render();return;}
+    if(!pass||pass.length<8){S.defErr='Senha deve ter pelo menos 8 caracteres.';render();return;}
+    btnCriar.disabled=true;btnCriar.textContent='A criar...';
+    try{
+      await authSignUp(email,pass);
+      await authSetRole(email,role);
+      S.defErr='';S.defMsg=`Utilizador ${email} criado com role "${role}".`;
+      // Limpar campos
+      document.getElementById('d-email').value='';
+      document.getElementById('d-npass').value='';
+      // Recarregar lista se estava aberta
+      if(S.defUsers.length>0)S.defUsers=await authListUsers();
+      render();
+    }catch(e){S.defErr='Erro: '+e.message;render();btnCriar.disabled=false;}
+  };
+}
+
+window.toggleRole=async(uid,email,currentRole)=>{
+  const newRole=currentRole==='admin'?'funcionaria':'admin';
+  if(!confirm(`Mudar ${email} de "${currentRole}" para "${newRole}"?`))return;
+  try{
+    await authSetRole(email,newRole);
+    S.defUsers=await authListUsers();
+    S.defMsg=`Role de ${email} actualizado para "${newRole}".`;
+    S.defErr='';render();
+  }catch(e){S.defErr='Erro: '+e.message;render();}
+};
+window.removeUser=async uid=>{
+  const u=S.defUsers.find(x=>x.id===uid);
+  if(!confirm(`Remover utilizador ${u?.email}? Esta acção não pode ser desfeita.`))return;
+  try{
+    await authDeleteUser(uid);
+    S.defUsers=S.defUsers.filter(x=>x.id!==uid);
+    S.defMsg='Utilizador removido.';S.defErr='';render();
+  }catch(e){S.defErr='Erro: '+e.message;render();}
+};
+
+function footerHTML(){return `
+<div style="margin-top:32px;padding:18px 0 8px;border-top:1px solid var(--border);text-align:center">
+  <div style="font-family:Georgia,serif;font-size:13px;color:var(--dark);letter-spacing:.08em;margin-bottom:4px">
+    <span style="color:var(--gold)">FASHION</span> DECOR
+  </div>
+  <p style="font-size:11px;color:var(--mid);line-height:1.6">
+    © ${yr} Fashion Decor · Maputo, Moçambique<br>
+    Todos os direitos reservados · (FDC)
+  </p>
+  <p style="font-size:10px;color:var(--border);margin-top:6px">Reprodução ou partilha não autorizada é proibida.</p>
+</div>`;}
+
+// ══════════════════════════════════════════════
+// PAGE ROUTER
+// ══════════════════════════════════════════════
+function pageHTML(){
+  const isAdmin=S.role==='admin';
+  if(S.page==='monitor')    return isAdmin?monitorHTML():'';
+  if(S.page==='stock')      return stockHTML(isAdmin);
+  if(S.page==='aluguer')    return aluguerHTML(isAdmin);
+  if(S.page==='cotacoes')   return isAdmin?cotacoesHTML():'';
+  if(S.page==='custos')     return isAdmin?custosHTML():'';
+  if(S.page==='definicoes') return isAdmin?definicoesHTML():'';
+  return '';
+}
+function bindPage(){
+  const isAdmin=S.role==='admin';
+  if(S.page==='stock')      bindStock(isAdmin);
+  if(S.page==='aluguer')    bindAluguer(isAdmin);
+  if(S.page==='cotacoes'&&isAdmin) bindCotacoes();
+  if(S.page==='custos'&&isAdmin)     bindCustos();
+  if(S.page==='definicoes'&&isAdmin) bindDefinicoes();
+}
+
+// ══════════════════════════════════════════════
+// MONITOR
+// ══════════════════════════════════════════════
+function monitorHTML(){
+  const ec=S.alugueis.filter(a=>a.status==='Em curso');
+  const pe=S.cotacoes.filter(c=>c.status==='Pendente');
+  const lw=S.stock.filter(s=>(s.qtd_cidade+s.qtd_matola)<=s.minimo);
+  const va=S.stock.reduce((s,x)=>s+(x.qtd_cidade+x.qtd_matola)*x.preco,0);
+  const tC=S.stock.reduce((s,x)=>s+x.qtd_cidade,0);
+  const tM=S.stock.reduce((s,x)=>s+x.qtd_matola,0);
+  return `
+<div class="kgrid">
+  <div class="kc"><div class="kl">${I.stock} Artigos</div><div class="kv">${S.stock.length}</div></div>
+  <div class="kc"><div class="kl">${I.aluguer} Em aluguer</div><div class="kv">${ec.length}</div></div>
+  <div class="kc"><div class="kl">${I.cotacoes} Cotações pend.</div><div class="kv">${pe.length}</div></div>
+  <div class="kc"><div class="kl">${I.monitor} Valor stock</div><div class="kv sm">${fmtMZN(va)}</div></div>
+</div>
+<div class="g2c">
+  <div class="card"><div class="cp">
+    <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px">${I.loc} Stock por armazém</div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #EFE5D0"><span>Armazém da Cidade</span><strong>${tC} un.</strong></div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0"><span>Armazém da Matola</span><strong>${tM} un.</strong></div>
+  </div></div>
+  <div class="card"><div class="cp">
+    <div style="font-size:11px;color:var(--danger);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px">${I.warn} Alertas — stock baixo</div>
+    ${lw.length===0?`<p style="font-size:13px;color:var(--success)">✓ Todos os artigos acima do mínimo.</p>`
+      :lw.map(s=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #EFE5D0;font-size:13px"><span>${s.nome}</span><span style="color:var(--danger);font-weight:700">${s.qtd_cidade+s.qtd_matola} / mín.${s.minimo}</span></div>`).join('')}
+  </div></div>
+  <div class="card c2"><div class="cp">
+    <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px">${I.aluguer} Material fora do armazém</div>
+    ${ec.length===0?`<p style="font-size:13px;color:var(--mid)">Nenhum material fora dos armazéns.</p>`
+      :ec.map(a=>{const art=S.stock.find(s=>s.id===a.artigo_id);return`
+      <div style="padding:8px 0;border-bottom:1px solid #EFE5D0">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><strong style="font-size:13px">${art?art.nome:'—'} × ${a.quantidade}</strong> <span style="font-size:12px;color:var(--mid)">→ ${a.cliente}</span></div>
+          <span style="font-size:12px;color:var(--mid)">de ${a.armazem} · dev. ${a.data_prevista||'a definir'}</span>
+        </div>
+      </div>`}).join('')}
+  </div></div>
+</div>
+<div style="margin-top:18px;border:1.5px solid var(--gold);border-radius:8px;padding:14px 16px;background:rgba(212,160,23,0.07)">
+  <div style="display:flex;align-items:flex-start;gap:10px">
+    <span style="font-size:20px;flex-shrink:0">📋</span>
+    <div>
+      <div style="font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">NB — Política de registo de saídas</div>
+      <p style="font-size:13px;color:var(--dark);line-height:1.7"><strong>Toda e qualquer saída de material do armazém deve ser registada como aluguer</strong>, independentemente da finalidade — seja para uso próprio, uso familiar, empréstimo a amigos ou qualquer outra situação não comercial.</p>
+      <p style="font-size:13px;color:var(--mid);line-height:1.7;margin-top:8px">Nesses casos, preenche normalmente o registo de aluguer e indica no campo <strong style="color:var(--dark)">Evento / Local</strong> a natureza da saída, por exemplo:</p>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 12px;font-size:12px"><span style="color:var(--gold);font-weight:700">Evento / Local: </span><span style="color:var(--dark)">"Uso próprio — não pago"</span></div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 12px;font-size:12px"><span style="color:var(--gold);font-weight:700">Evento / Local: </span><span style="color:var(--dark)">"Empréstimo familiar — não pago"</span></div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 12px;font-size:12px"><span style="color:var(--gold);font-weight:700">Evento / Local: </span><span style="color:var(--dark)">"Empréstimo a [nome] — sem custo"</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--mid);line-height:1.6;margin-top:10px">Este procedimento garante que o stock está sempre correcto e os armazéns reflectem a realidade em todo o momento.</p>
+    </div>
+  </div>
+</div>`;}
+
+// ══════════════════════════════════════════════
+// STOCK
+// ══════════════════════════════════════════════
+function stockHTML(isAdmin=true){
+  const f=S.filtro.toLowerCase();
+  const rows=S.stock.filter(s=>s.nome.toLowerCase().includes(f)||(s.categoria||'').toLowerCase().includes(f));
+  const form=S.showForm?`
+  <div class="fb">
+    ${S.ferr?`<div class="alert">${S.ferr}</div>`:''}
+    <div class="fg g2">
+      <div class="s2"><label class="lbl">Nome *</label><input class="inp" id="f-nome" placeholder="ex: Cadeira Tiffany" value="${S.fd.nome||''}"/></div>
+      <div><label class="lbl">Categoria</label><input class="inp" id="f-cat" placeholder="ex: Mobiliário" value="${S.fd.categoria||''}"/></div>
+      <div><label class="lbl">Preço (MT)</label><input class="inp" id="f-preco" type="number" min="0" value="${S.fd.preco||''}"/></div>
+      <div><label class="lbl">Qtd Cidade</label><input class="inp" id="f-a" type="number" min="0" value="${S.fd.qtd_cidade||''}"/></div>
+      <div><label class="lbl">Qtd Matola</label><input class="inp" id="f-b" type="number" min="0" value="${S.fd.qtd_matola||''}"/></div>
+      <div><label class="lbl">Mínimo</label><input class="inp" id="f-min" type="number" min="0" value="${S.fd.minimo||''}"/></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn bd bsm" id="btn-add-s">Guardar artigo</button>
+      <button class="btn bgh bsm" onclick="S.showForm=false;render()">Cancelar</button>
+    </div>
+  </div>`:'';
+
+  const desktopT=`<div class="card"><table class="tbl">
+    <thead><tr><th>Artigo</th><th>Categoria</th><th class="r">Cidade</th><th class="r">Matola</th><th class="r">Total</th><th class="r">Mín.</th><th class="r">Preço/un.</th><th></th></tr></thead>
+    <tbody>
+    ${rows.map(s=>{const t=s.qtd_cidade+s.qtd_matola,lw=t<=s.minimo;return`
+    <tr style="${lw?'background:#FEF5F5':''}">
+      <td class="b">${s.nome} ${lw?`<span style="color:var(--danger)">${I.warn}</span>`:''}</td>
+      <td class="m">${s.categoria||'—'}</td>
+      <td class="r"><input type="number" min="0" value="${s.qtd_cidade}" class="qi" onchange="updQty('${s.id}','qtd_cidade',this.value)"/></td>
+      <td class="r"><input type="number" min="0" value="${s.qtd_matola}" class="qi" onchange="updQty('${s.id}','qtd_matola',this.value)"/></td>
+      <td class="${lw?'d':'b r'}">${t}</td>
+      <td class="r m">${s.minimo}</td>
+      <td class="r m">${fmtMZN(s.preco)}</td>
+      <td><button onclick="delS('${s.id}')" style="color:var(--border);padding:4px">${I.trash}</button></td>
+    </tr>`}).join('')}
+    ${rows.length===0?`<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--border)">Nenhum artigo.</td></tr>`:''}
+    </tbody></table></div>`;
+
+  const mobileC=rows.map(s=>{const t=s.qtd_cidade+s.qtd_matola,lw=t<=s.minimo;return`
+  <div class="card" style="${lw?'border-color:var(--danger)':''}"><div class="cp">
+    <div class="li-r"><div><div class="li-t">${s.nome} ${lw?I.warn:''}</div><div class="li-s">${s.categoria||'Geral'}</div></div>
+    <button onclick="delS('${s.id}')" style="color:var(--border)">${I.trash}</button></div>
+    <div class="dv"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;font-size:12px">
+      <div><div class="li-s">Cidade</div><input type="number" min="0" value="${s.qtd_cidade}" class="inp" style="margin-top:3px;padding:6px;font-size:16px" onchange="updQty('${s.id}','qtd_cidade',this.value)"/></div>
+      <div><div class="li-s">Matola</div><input type="number" min="0" value="${s.qtd_matola}" class="inp" style="margin-top:3px;padding:6px;font-size:16px" onchange="updQty('${s.id}','qtd_matola',this.value)"/></div>
+      <div><div class="li-s">Total</div><div style="font-weight:700;color:${lw?'var(--danger)':'var(--dark)'};font-size:18px;margin-top:4px">${t}</div></div>
+      <div><div class="li-s">Preço</div><div style="font-size:11px;color:var(--mid);margin-top:4px">${fmtMZN(s.preco)}</div></div>
+    </div>
+  </div></div>`}).join('')||`<p style="text-align:center;padding:40px;color:var(--border)">Nenhum artigo.</p>`;
+
+  return`${form}<div style="margin-bottom:12px"><input class="inp" id="fi" placeholder="🔍 Pesquisar..." value="${S.filtro}"/></div>${isMobile()?mobileC:desktopT}`;}
+
+function bindStock(isAdmin=true){
+  if(!isAdmin){const fi=document.getElementById('fi');if(fi)fi.oninput=e=>{S.filtro=e.target.value;render();};return;}
+  const fi=document.getElementById('fi');
+  if(fi)fi.oninput=e=>{S.filtro=e.target.value;render();};
+  const b=document.getElementById('btn-add-s');
+  if(!b)return;
+  b.onclick=async()=>{
+    const nome=document.getElementById('f-nome').value.trim();
+    const cat=document.getElementById('f-cat').value.trim();
+    const a=Number(document.getElementById('f-a').value)||0;
+    const bv=Number(document.getElementById('f-b').value)||0;
+    const min=Number(document.getElementById('f-min').value)||0;
+    const preco=Number(document.getElementById('f-preco').value)||0;
+    if(!nome){S.ferr='O nome do artigo é obrigatório.';render();return;}
+    b.disabled=true;b.textContent='A guardar...';
+    try{
+      await DB.addStock({nome,categoria:cat||'Geral',qtd_cidade:a,qtd_matola:bv,minimo:min,preco});
+      S.ferr='';S.showForm=false;await loadAll();
+    }catch(e){S.ferr='Erro ao guardar: '+e.message;render();b.disabled=false;}
+  };
+}
+window.delS=async id=>{
+  if(!confirm('Remover artigo?'))return;
+  try{await DB.delStock(id);await loadAll();}catch(e){alert('Erro: '+e.message);}
+};
+window.updQty=async(id,col,val)=>{
+  const n=Math.max(0,Number(val)||0);
+  try{await DB.updStock(id,{[col]:n});S.stock=S.stock.map(s=>s.id===id?{...s,[col]:n}:s);}
+  catch(e){alert('Erro ao actualizar: '+e.message);}
+};
+
+// ══════════════════════════════════════════════
+// ALUGUER
+// ══════════════════════════════════════════════
+function aluguerHTML(isAdmin=true){
+  const ec=S.alugueis.filter(a=>a.status==='Em curso');
+  const dv=S.alugueis.filter(a=>a.status==='Devolvido');
+  const getItens=aid=>S.aluguerItens.filter(i=>i.aluguer_id===aid);
+
+  // ── Vista simplificada para funcionária ──
+  if(!isAdmin){
+    const mkFuncCards=rows=>rows.map(a=>{
+      const itens=getItens(a.id);
+      return`
+    <div class="card"><div class="cp">
+      <div class="li-r">
+        <div>
+          <div class="li-t">${a.cliente}</div>
+          ${a.evento?`<div class="li-s" style="color:var(--warn);font-size:11px">${a.evento}</div>`:''}
+        </div>
+        <div class="li-s">${a.armazem}</div>
+      </div>
+      <div style="margin-top:8px">
+        ${itens.map(it=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dashed #EFE5D0">
+          <span>${it.nome}</span><span style="font-weight:700">${it.quantidade}</span>
+        </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-top:6px;padding-top:6px;border-top:1px solid #EFE5D0">
+        Saída: ${a.data_saida||'—'} · Devolução prevista: ${a.data_prevista||'a definir'}
+      </div>
+    </div></div>`}).join('')||`<div class="card"><div class="cp" style="text-align:center;padding:28px;color:var(--border)">Nenhum material fora do armazém.</div></div>`;
+    return`
+    <p style="font-size:12px;color:var(--mid);margin-bottom:12px">Material actualmente fora dos armazéns — vista de consulta.</p>
+    ${mkFuncCards(ec)}
+    ${dv.length>0?`
+    <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin:16px 0 8px">Devolvidos recentemente (${dv.length})</div>
+    ${mkFuncCards(dv)}`:''}`;
+  }
+
+  if(!S.fitensAl) S.fitensAl=[];
+
+  const form=S.showForm?`
+  <div class="fb">
+    ${S.ferr?`<div class="alert">${S.ferr}</div>`:''}
+
+    <div class="fg g2">
+      <div class="s2"><label class="lbl">Cliente *</label><input class="inp" id="f-cli" placeholder="Nome do cliente" value="${S.fd.cliente||''}"/></div>
+      <div><label class="lbl">Data saída</label><input class="inp" id="f-saida" type="date" value="${S.fd.data_saida||today()}" oninput="saveFormState();recalcTotal()"/></div>
+      <div><label class="lbl">Devolução prevista</label><input class="inp" id="f-prev" type="date" value="${S.fd.data_prevista||''}" oninput="saveFormState();recalcTotal()"/></div>
+      <div><label class="lbl">Armazém</label>
+        <select class="inp" id="f-arm">
+          ${ARMAZENS.map(a=>`<option value="${a}" ${S.fd.armazem===a?'selected':''}>${a}</option>`).join('')}
+        </select>
+      </div>
+      <div class="s2"><label class="lbl">Evento / Local</label>
+        <input class="inp" id="f-evt" placeholder='ex: "Casamento · Jardim dos Namorados"' value="${S.fd.evento||''}"/>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);margin:12px 0;padding-top:12px">
+      <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Artigos do aluguer</div>
+      ${S.ierr?`<div class="alert">${S.ierr}</div>`:''}
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:2;min-width:140px">
+          <label class="lbl">Artigo</label>
+          <select class="inp" id="f-art">
+            <option value="">Seleccionar...</option>
+            ${S.stock.map(s=>`<option value="${s.id}">${s.nome}</option>`).join('')}
+          </select>
+        </div>
+        <div style="width:80px">
+          <label class="lbl">Qtd</label>
+          <input class="inp" id="f-qtd" type="number" min="1" value="1"/>
+        </div>
+        <div id="disp-box" style="font-size:12px;color:var(--mid);padding-bottom:10px"></div>
+        <button class="btn bgh bsm" id="btn-add-linha" style="margin-bottom:1px">+ Adicionar</button>
+      </div>
+
+      ${S.fitensAl.length>0?`
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px">
+        ${S.fitensAl.map((it,i)=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid #EFE5D0;font-size:13px">
+          <div>
+            <div style="font-weight:600;color:var(--dark)">${it.nome}</div>
+            <div style="font-size:11px;color:var(--mid)">${it.armazem} · ${fmtMZN(it.preco)}/un./dia</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="text-align:right">
+              <div style="font-weight:700">× ${it.qtd}</div>
+              <div style="font-size:11px;color:var(--gold);font-weight:600">${fmtMZN(it.preco*it.qtd*Math.max(1,Math.round((new Date(S.fd.data_prevista||S.fd.data_saida||today())-new Date(S.fd.data_saida||today()))/(86400000))))}</div>
+            </div>
+            <button onclick="rmAlItem(${i})" style="color:var(--danger)">${I.x}</button>
+          </div>
+        </div>`).join('')}
+        <div style="padding:10px 12px;background:var(--row-head);display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;color:var(--mid)">${S.fitensAl.length} artigo${S.fitensAl.length>1?'s':''} · ${S.fitensAl.reduce((s,i)=>s+i.qtd,0)} unidades</span>
+          <span style="font-size:15px;font-weight:700;color:var(--dark);font-family:Georgia,serif">
+            ${(()=>{const d=Math.max(1,Math.round((new Date(S.fd.data_prevista||S.fd.data_saida||today())-new Date(S.fd.data_saida||today()))/(86400000)));return fmtMZN(S.fitensAl.reduce((s,i)=>s+(i.preco*i.qtd*d),0));})()}
+          </span>
+        </div>
+      </div>`:''}
+    </div>
+
+    <div style="border-top:1px solid var(--border);margin:12px 0;padding-top:12px">
+      <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Pagamento</div>
+      <div class="fg g2">
+        <div>
+          <label class="lbl">Valor total (MT)
+            ${S.fitensAl.length>0&&S.fd.data_saida&&S.fd.data_prevista?
+              `<span id="dias-label" style="color:var(--gold);font-weight:700;margin-left:6px">
+                ${Math.max(1,Math.round((new Date(S.fd.data_prevista)-new Date(S.fd.data_saida))/86400000))} dia${Math.max(1,Math.round((new Date(S.fd.data_prevista)-new Date(S.fd.data_saida))/86400000))!==1?'s':''}
+              </span>`:''}
+          </label>
+          <input class="inp" id="f-total" type="number" min="0" placeholder="0.00"
+            value="${(()=>{const d=S.fd.data_saida&&S.fd.data_prevista?Math.max(1,Math.round((new Date(S.fd.data_prevista)-new Date(S.fd.data_saida))/86400000)):1;return S.fitensAl.length>0?(S.fitensAl.reduce((s,i)=>s+(i.preco*i.qtd*d),0)).toFixed(2):S.fd.valor_total||'';})()}"
+            oninput="S.fd.valor_total=this.value;calcPag()"
+            style="background:var(--row-head);color:var(--dark);font-weight:700"/>
+          <div style="font-size:11px;color:var(--mid);margin-top:3px">Qtd × Preço/dia × Nº dias · editável se houver desconto</div>
+        </div>
+        <div>
+          <label class="lbl">Valor já pago (MT)</label>
+          <input class="inp" id="f-pago" type="number" min="0" placeholder="0.00" value="${S.fd.valor_pago||''}" oninput="calcPag()"/>
+        </div>
+      </div>
+      <div id="pag-calc" style="display:none;background:#FAF4E8;border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:4px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+          <div><div style="font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Total</div>
+            <div id="pc-total" style="font-size:16px;font-weight:700;color:var(--dark);font-family:Georgia,serif"></div></div>
+          <div><div style="font-size:10px;color:var(--success);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Pago</div>
+            <div id="pc-pago" style="font-size:16px;font-weight:700;color:var(--success);font-family:Georgia,serif"></div></div>
+          <div><div style="font-size:10px;color:var(--danger);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Falta</div>
+            <div id="pc-falta" style="font-size:16px;font-weight:700;font-family:Georgia,serif"></div></div>
+        </div>
+        <div style="margin-top:10px">
+          <div style="background:#EFE5D0;border-radius:99px;height:8px;overflow:hidden">
+            <div id="pc-bar" style="height:100%;background:var(--success);border-radius:99px;transition:width .3s;width:0%"></div>
+          </div>
+          <div id="pc-pct" style="text-align:center;font-size:11px;color:var(--mid);margin-top:4px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn bd bsm" id="btn-add-al">Registar aluguer</button>
+      <button class="btn bgh bsm" onclick="S.showForm=false;S.fitensAl=[];render()">Cancelar</button>
+    </div>
+  </div>`:'';
+
+  const pagInfo=a=>{
+    const t=Number(a.valor_total)||0;const p=Number(a.valor_pago)||0;
+    const f=Math.max(0,t-p);const pct=t>0?Math.min(100,Math.round(p/t*100)):0;
+    return{t,p,f,pct};
+  };
+
+  const mkTable=rows=>`<div class="card" style="overflow-x:auto"><table class="tbl"><thead><tr>
+    <th>Cliente</th><th>Artigos</th><th>Armazém</th><th>Evento/Local</th>
+    <th class="r">Total</th><th class="r">Pago</th><th class="r">Falta</th>
+    <th>Saída</th><th>Dev. prevista</th><th></th>
+  </tr></thead><tbody>
+  ${rows.map(a=>{const itens=getItens(a.id);const pg=pagInfo(a);return`
+  <tr>
+    <td class="b">${a.cliente}</td>
+    <td style="font-size:12px">${itens.length>0?itens.map(i=>`${i.nome} ×${i.quantidade}`).join('<br>'):'—'}</td>
+    <td class="m">${a.armazem}</td>
+    <td class="m" style="font-size:12px">${a.evento||'—'}</td>
+    <td class="r m">${pg.t>0?fmtMZN(pg.t):'—'}</td>
+    <td class="r" style="color:var(--success);font-weight:600">${pg.p>0?fmtMZN(pg.p):'—'}</td>
+    <td class="r" style="font-weight:600;color:${pg.t>0?(pg.f>0?'var(--danger)':'var(--success)'):'var(--mid)'}">
+      ${pg.t>0?(pg.f>0?fmtMZN(pg.f)+' ('+pg.pct+'%)':'Pago'):'—'}
+    </td>
+    <td class="m">${a.data_saida||'—'}</td><td class="m">${a.data_prevista||'—'}</td>
+    <td style="white-space:nowrap;text-align:right">
+      <button onclick="pRecibo('${a.id}')" style="color:var(--gold);margin-right:4px">${I.print}</button>
+      ${a.status==='Em curso'?`<button onclick="devAl('${a.id}')" style="color:var(--success);margin-right:4px">${I.check}</button>`:''}
+      <button onclick="delAl('${a.id}')" style="color:var(--border)">${I.trash}</button>
+    </td>
+  </tr>`}).join('')}
+  ${rows.length===0?`<tr><td colspan="10" style="text-align:center;padding:28px;color:var(--border)">Sem registos.</td></tr>`:''}
+  </tbody></table></div>`;
+
+  const mkCards=rows=>rows.map(a=>{
+    const itens=getItens(a.id);const pg=pagInfo(a);return`
+  <div class="card"><div class="cp">
+    <div class="li-r">
+      <div>
+        <div class="li-t">${a.cliente}</div>
+        <div class="li-s">${a.armazem}${a.data_saida?' · '+a.data_saida:''}</div>
+        ${a.evento?`<div class="li-s" style="color:var(--warn);font-size:11px">${a.evento}</div>`:''}
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button onclick="pRecibo('${a.id}')" style="color:var(--gold)">${I.print}</button>
+        ${a.status==='Em curso'?`<button onclick="devAl('${a.id}')" style="color:var(--success)">${I.check}</button>`:''}
+        <button onclick="delAl('${a.id}')" style="color:var(--border)">${I.trash}</button>
+      </div>
+    </div>
+    ${itens.length>0?`
+    <div style="margin-top:8px;border-top:1px solid #EFE5D0;padding-top:8px">
+      ${itens.map(it=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dashed #EFE5D0">
+        <span style="color:var(--dark)">${it.nome}</span><span style="font-weight:700">× ${it.quantidade}</span>
+      </div>`).join('')}
+    </div>`:''}
+    ${pg.t>0?`
+    <div style="margin-top:10px;border-top:1px solid #EFE5D0;padding-top:10px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;margin-bottom:8px">
+        <div><div style="font-size:9px;color:var(--mid);text-transform:uppercase;margin-bottom:2px">Total</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">${fmtMZN(pg.t)}</div></div>
+        <div><div style="font-size:9px;color:var(--success);text-transform:uppercase;margin-bottom:2px">Pago</div>
+          <div style="font-size:13px;font-weight:700;color:var(--success)">${fmtMZN(pg.p)}</div></div>
+        <div><div style="font-size:9px;color:var(--danger);text-transform:uppercase;margin-bottom:2px">Falta</div>
+          <div style="font-size:13px;font-weight:700;color:${pg.f>0?'var(--danger)':'var(--success)'}">
+            ${pg.f>0?fmtMZN(pg.f):'Pago'}</div></div>
+      </div>
+      <div style="background:#EFE5D0;border-radius:99px;height:6px;overflow:hidden">
+        <div style="height:100%;width:${pg.pct}%;background:${pg.pct>=100?'var(--success)':pg.pct>=50?'var(--gold)':'var(--danger)'};border-radius:99px"></div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--mid);margin-top:3px">${pg.pct}% pago</div>
+    </div>`:''}
+    <div style="font-size:12px;color:var(--mid);margin-top:6px">Dev.: ${a.data_prevista||'a definir'}</div>
+  </div></div>`}).join('')||`<div class="card"><div class="cp" style="text-align:center;padding:24px;color:var(--border)">Sem registos.</div></div>`;
+
+  return`${form}
+  <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Em curso (${ec.length})</div>
+  ${isMobile()?mkCards(ec):mkTable(ec)}
+  <div style="font-size:11px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin:16px 0 8px">Devoluções (${dv.length})</div>
+  ${isMobile()?mkCards(dv):mkTable(dv)}`;}
+
+function bindAluguer(isAdmin=true){
+  if(!isAdmin)return;
+  if(!S.fitensAl)S.fitensAl=[];
+
+  const as=document.getElementById('f-art');
+  const am=document.getElementById('f-arm');
+  const upD=()=>{
+    const ai=as?as.value:'';const arm=am?am.value:ARMAZENS[0];
+    const art=S.stock.find(s=>s.id===ai);
+    const d=art?(arm===ARMAZENS[0]?art.qtd_cidade:art.qtd_matola):'—';
+    const el=document.getElementById('disp-box');
+    if(el)el.innerHTML=ai?`Disponível: <strong style="color:var(--dark);font-size:14px;margin-left:4px">${d}</strong>`:'';
+  };
+  if(as)as.onchange=e=>{upD();};
+  if(am)am.onchange=e=>{upD();};
+  upD();
+
+  // Função para guardar estado actual do formulário no S.fd
+  const saveFormState=()=>{
+    S.fd.cliente    = document.getElementById('f-cli')?.value.trim()||S.fd.cliente||'';
+    S.fd.armazem    = document.getElementById('f-arm')?.value||S.fd.armazem||ARMAZENS[0];
+    S.fd.data_saida = document.getElementById('f-saida')?.value||S.fd.data_saida||today();
+    S.fd.data_prevista = document.getElementById('f-prev')?.value||S.fd.data_prevista||'';
+    S.fd.evento     = document.getElementById('f-evt')?.value.trim()||S.fd.evento||'';
+    S.fd.valor_total= document.getElementById('f-total')?.value||S.fd.valor_total||'';
+    S.fd.valor_pago = document.getElementById('f-pago')?.value||S.fd.valor_pago||'';
+  };
+
+  // Botão adicionar linha de artigo
+  const btnLi=document.getElementById('btn-add-linha');
+  if(btnLi)btnLi.onclick=()=>{
+    saveFormState(); // ← guarda tudo antes de re-renderizar
+    const ai=document.getElementById('f-art').value;
+    const arm=S.fd.armazem;
+    const qtd=Number(document.getElementById('f-qtd').value)||0;
+    if(!ai){S.ierr='Seleccione um artigo.';render();return;}
+    if(qtd<=0){S.ierr='Quantidade deve ser maior que zero.';render();return;}
+    const art=S.stock.find(s=>s.id===ai);
+    const disp=art?(arm===ARMAZENS[0]?art.qtd_cidade:art.qtd_matola):0;
+    if(qtd>disp){S.ierr=`Stock insuficiente em ${arm}. Disponível: ${disp}.`;render();return;}
+    const existe=S.fitensAl.find(i=>i.artigo_id===ai&&i.armazem===arm);
+    if(existe){S.ierr='Artigo já adicionado. Remove e readiciona com a quantidade correcta.';render();return;}
+    S.ierr='';
+    const dias=S.fd.data_saida&&S.fd.data_prevista?Math.max(1,Math.round((new Date(S.fd.data_prevista)-new Date(S.fd.data_saida))/86400000)):1;
+    const totalAl=S.fitensAl.reduce((s,i)=>s+(i.preco*i.qtd*dias),0)+(art.preco*qtd*dias);
+    S.fd.valor_total=totalAl.toFixed(2);
+    S.fitensAl.push({artigo_id:ai,nome:art.nome,qtd,armazem:arm,disp,preco:art.preco||0});
+    render();
+  };
+
+  // Botão guardar aluguer
+  const btn=document.getElementById('btn-add-al');
+  if(!btn)return;
+  btn.onclick=async()=>{
+    saveFormState(); // ← guardar estado antes de validar
+    const cli=S.fd.cliente;
+    const arm=S.fd.armazem;
+    const saida=S.fd.data_saida;
+    const prev=S.fd.data_prevista;
+    const evt=S.fd.evento;
+    const vTotal=Number(S.fd.valor_total)||0;
+    const vPago=Number(S.fd.valor_pago)||0;
+    if(!cli){S.ferr='Indique o nome do cliente.';render();return;}
+    if(S.fitensAl.length===0){S.ferr='Adicione pelo menos um artigo.';render();return;}
+    if(vPago>vTotal&&vTotal>0){S.ferr='O valor pago não pode ser superior ao total.';render();return;}
+    btn.disabled=true;btn.textContent='A guardar...';
+    try{
+      const [al]=await DB.addAluguer({cliente:cli,armazem:arm,data_saida:saida||null,data_prevista:prev||null,evento:evt||null,valor_total:vTotal||null,valor_pago:vPago||null,status:'Em curso'});
+      await Promise.all(S.fitensAl.map(it=>DB.addAluguerItem({aluguer_id:al.id,artigo_id:it.artigo_id,nome:it.nome,quantidade:it.qtd,armazem:it.armazem})));
+      S.ferr='';S.showForm=false;S.fitensAl=[];await loadAll();
+    }catch(e){S.ferr='Erro: '+e.message;render();btn.disabled=false;}
+  };
+}
+window.rmAlItem=i=>{
+  if(!S.fitensAl)S.fitensAl=[];
+  // Guardar estado do formulário antes de re-renderizar
+  S.fd.cliente       = document.getElementById('f-cli')?.value.trim()||S.fd.cliente||'';
+  S.fd.armazem       = document.getElementById('f-arm')?.value||S.fd.armazem||ARMAZENS[0];
+  S.fd.data_saida    = document.getElementById('f-saida')?.value||S.fd.data_saida||today();
+  S.fd.data_prevista = document.getElementById('f-prev')?.value||S.fd.data_prevista||'';
+  S.fd.evento        = document.getElementById('f-evt')?.value.trim()||S.fd.evento||'';
+  S.fd.valor_total   = document.getElementById('f-total')?.value||S.fd.valor_total||'';
+  S.fd.valor_pago    = document.getElementById('f-pago')?.value||S.fd.valor_pago||'';
+  S.fitensAl.splice(i,1);
+  const dias=S.fd.data_saida&&S.fd.data_prevista?Math.max(1,Math.round((new Date(S.fd.data_prevista)-new Date(S.fd.data_saida))/86400000)):1;
+  const novoTotal=S.fitensAl.reduce((s,it)=>s+(it.preco*it.qtd*dias),0);
+  S.fd.valor_total=novoTotal>0?novoTotal.toFixed(2):'';
+  render();
+};
+// Calcula número de dias entre saída e devolução
+window.calcDias=()=>{
+  const s=document.getElementById('f-saida')?.value;
+  const p=document.getElementById('f-prev')?.value||S.fd.data_prevista;
+  if(!s||!p)return 1;
+  const diff=Math.round((new Date(p)-new Date(s))/(1000*60*60*24));
+  return diff>0?diff:1;
+};
+// Recalcula total com base em qty × preco × dias
+window.recalcTotal=()=>{
+  const dias=window.calcDias();
+  const total=S.fitensAl.reduce((s,i)=>s+(i.preco*i.qtd*dias),0);
+  S.fd.valor_total=total>0?total.toFixed(2):'';
+  // Actualizar campo visual
+  const el=document.getElementById('f-total');
+  if(el)el.value=S.fd.valor_total;
+  // Actualizar label de dias
+  const dl=document.getElementById('dias-label');
+  if(dl)dl.textContent=dias+' dia'+( dias!==1?'s':'');
+  calcPag();
+};
+window.calcPag=()=>{
+  const t=Number(document.getElementById('f-total')?.value)||0;
+  const p=Number(document.getElementById('f-pago')?.value)||0;
+  const box=document.getElementById('pag-calc');
+  if(!box)return;
+  if(t<=0&&p<=0){box.style.display='none';return;}
+  box.style.display='block';
+  const falta=Math.max(0,t-p);
+  const pct=t>0?Math.min(100,Math.round(p/t*100)):0;
+  document.getElementById('pc-total').textContent=fmtMZN(t);
+  document.getElementById('pc-pago').textContent=fmtMZN(p);
+  const fe=document.getElementById('pc-falta');
+  fe.textContent=falta>0?fmtMZN(falta):'Liquidado';
+  fe.style.color=falta>0?'var(--danger)':'var(--success)';
+  document.getElementById('pc-bar').style.width=pct+'%';
+  document.getElementById('pc-bar').style.background=pct>=100?'var(--success)':pct>=50?'var(--gold)':'var(--danger)';
+  document.getElementById('pc-pct').textContent=pct+'% pago'+(pct>=100?' — liquidado!':'');
+};
+window.devAl=async id=>{
+  try{await DB.updAluguer(id,{status:'Devolvido'});await loadAll();}
+  catch(e){alert('Erro: '+e.message);}
+};
+window.delAl=async id=>{
+  if(!confirm('Remover registo?'))return;
+  try{await DB.delAluguerItens(id);await DB.delAluguer(id);await loadAll();}catch(e){alert('Erro: '+e.message);}
+};
+
+// ══════════════════════════════════════════════
+// COTAÇÕES
+// ══════════════════════════════════════════════
+function cotacoesHTML(){
+  const cotComItens=S.cotacoes.map(c=>({...c,itens:S.cotItens.filter(i=>i.cotacao_id===c.id)}));
+  const form=S.showForm?`
+  <div class="fb">
+    ${S.ferr?`<div class="alert">${S.ferr}</div>`:''}
+    <div class="fg g2">
+      <div class="s2"><label class="lbl">Cliente *</label><input class="inp" id="f-cli" value="${S.fd.cliente||''}"/></div>
+      <div><label class="lbl">Evento / Local</label><input class="inp" id="f-evt" value="${S.fd.evento||''}"/></div>
+      <div><label class="lbl">Data</label><input class="inp" id="f-data" type="date" value="${S.fd.data_evento||''}"/></div>
+    </div>
+    ${S.ierr?`<div class="alert">${S.ierr}</div>`:''}
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <select class="inp" id="f-art" style="flex:1;min-width:160px">
+        <option value="">Artigo...</option>
+        ${S.stock.map(s=>`<option value="${s.id}">${s.nome} — ${fmtMZN(s.preco)}</option>`).join('')}
+      </select>
+      <input class="inp" id="f-qtd" type="number" min="1" value="1" style="width:80px"/>
+      <button class="btn bgh bsm" id="btn-li">+ Linha</button>
+    </div>
+    ${S.fitens.length>0?`
+    <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px">
+      ${S.fitens.map((it,i)=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #EFE5D0;font-size:13px">
+        <span>${it.nome} × ${it.qtd}</span>
+        <span style="display:flex;align-items:center;gap:10px;color:var(--mid)">${fmtMZN(it.qtd*it.preco)}<button onclick="rmLi(${i})" style="color:var(--danger)">${I.x}</button></span>
+      </div>`).join('')}
+      <div style="display:flex;justify-content:space-between;padding:9px 12px;font-weight:700;color:var(--dark);font-size:14px">
+        <span>Total</span><span>${fmtMZN(S.fitens.reduce((s,i)=>s+i.qtd*i.preco,0))}</span>
+      </div>
+    </div>`:''}
+    <div style="display:flex;gap:8px">
+      <button class="btn bg bsm" id="btn-sv">Guardar cotação</button>
+      <button class="btn bgh bsm" onclick="S.showForm=false;render()">Cancelar</button>
+    </div>
+  </div>`:'';
+
+  const cards=cotComItens.map(c=>{
+    const badge=c.status==='Aprovada'?'bo':c.status==='Rejeitada'?'be':'bw';
+    return`<div class="card"><div class="cp">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div><div class="li-t">${c.cliente}</div><div class="li-s">${c.evento||'Sem evento'}${c.data_evento?' · '+c.data_evento:''} · criado ${c.criado_em?c.criado_em.slice(0,10):'—'}</div></div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span class="badge ${badge}">${c.status}</span>
+          <button onclick="pCot('${c.id}')" style="color:var(--gold)">${I.print}</button>
+          <button onclick="delCo('${c.id}')" style="color:var(--border)">${I.trash}</button>
+        </div>
+      </div>
+      ${c.itens.map(it=>`<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mid);padding:3px 0;border-bottom:1px dashed #EFE5D0"><span>${it.nome} × ${it.quantidade}</span><span>${fmtMZN(it.quantidade*it.preco_unit)}</span></div>`).join('')}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;border-top:2px solid #E8DCC8;padding-top:8px">
+        <strong>${fmtMZN(c.total)}</strong>
+        ${c.status==='Pendente'?`<div style="display:flex;gap:6px">
+          <button class="btn bd bsm" onclick="setSt('${c.id}','Aprovada')">Aprovar</button>
+          <button class="btn bda bsm" onclick="setSt('${c.id}','Rejeitada')">Rejeitar</button>
+        </div>`:''}
+      </div>
+    </div></div>`;}).join('')||`<div class="card"><div class="cp" style="text-align:center;padding:40px;color:var(--border)">Nenhuma cotação.</div></div>`;
+  return`${form}${cards}`;}
+
+function bindCotacoes(){
+  const bl=document.getElementById('btn-li');
+  if(bl)bl.onclick=()=>{
+    const ai=document.getElementById('f-art').value;
+    const qtd=Number(document.getElementById('f-qtd').value)||0;
+    if(!ai){S.ierr='Seleccione um artigo.';render();return;}
+    if(qtd<=0){S.ierr='Quantidade deve ser maior que zero.';render();return;}
+    const art=S.stock.find(s=>s.id===ai);
+    S.ierr='';S.fitens.push({artigo_id:art.id,nome:art.nome,qtd,preco:art.preco});render();
+  };
+  const bs=document.getElementById('btn-sv');
+  if(!bs)return;
+  bs.onclick=async()=>{
+    const cli=document.getElementById('f-cli').value.trim();
+    const evt=document.getElementById('f-evt').value.trim();
+    const dt=document.getElementById('f-data').value;
+    if(!cli){S.ferr='Indique o nome do cliente.';render();return;}
+    if(S.fitens.length===0){S.ferr='Adicione pelo menos um artigo.';render();return;}
+    const total=S.fitens.reduce((s,i)=>s+i.qtd*i.preco,0);
+    bs.disabled=true;bs.textContent='A guardar...';
+    try{
+      const [cot]=await DB.addCotacao({cliente:cli,evento:evt||null,data_evento:dt||null,total,status:'Pendente'});
+      await Promise.all(S.fitens.map(it=>DB.addCotItem({cotacao_id:cot.id,artigo_id:it.artigo_id,nome:it.nome,quantidade:it.qtd,preco_unit:it.preco})));
+      S.ferr='';S.showForm=false;S.fitens=[];await loadAll();
+    }catch(e){S.ferr='Erro: '+e.message;render();bs.disabled=false;}
+  };
+}
+window.rmLi=i=>{S.fitens.splice(i,1);render();};
+window.setSt=async(id,st)=>{
+  try{await DB.updCotacao(id,{status:st});await loadAll();}catch(e){alert('Erro: '+e.message);}
+};
+window.delCo=async id=>{
+  if(!confirm('Remover cotação?'))return;
+  try{await DB.delCotItens(id);await DB.delCotacao(id);await loadAll();}catch(e){alert('Erro: '+e.message);}
+};
+
+// ══════════════════════════════════════════════
+// IMPRESSÃO A4
+// ══════════════════════════════════════════════
+function buildPrint(doc){
+  const isCot=doc.tipo==='cotacao';
+  return `<div style="font-family:Georgia,serif;color:#3B1F0A;max-width:170mm;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #D4A017;padding-bottom:14px;margin-bottom:22px">
+      <div><div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:28px;letter-spacing:.14em;font-weight:bold">FASHION</span><span style="font-size:14px;letter-spacing:.35em;color:#D4A017">DECOR</span></div>
+      <div style="font-size:10px;color:#7A6040;font-family:system-ui;margin-top:4px">Maputo, Moçambique · decoração de eventos</div></div>
+      <div style="text-align:right"><div style="font-size:20px;letter-spacing:.08em">${isCot?'COTAÇÃO':'RECIBO DE ALUGUER'}</div>
+      <div style="font-size:11px;color:#7A6040;font-family:system-ui">Nº <strong>${doc.numero}</strong> · ${doc.data}</div></div>
+    </div>
+    <div style="background:#F5EDD8;border-left:4px solid #D4A017;padding:10px 14px;margin-bottom:22px;font-family:system-ui">
+      <div style="font-size:9px;color:#7A6040;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">${isCot?'Cliente / Evento':'Cliente'}</div>
+      <div style="font-weight:bold;font-size:15px">${doc.cliente}</div>
+      ${doc.evento?`<div style="color:#5A3A18;font-size:12px">${doc.evento}</div>`:''}
+      ${doc.armazem?`<div style="color:#5A3A18;font-size:12px">Origem: ${doc.armazem}</div>`:''}
+      ${doc.dataPrevista?`<div style="color:#5A3A18;font-size:12px">Devolução prevista: ${doc.dataPrevista}</div>`:''}
+    </div>
+    <table style="width:100%;font-family:system-ui;font-size:11px;border-collapse:collapse;margin-bottom:16px;page-break-inside:auto;">
+      <thead><tr style="background:#3B1F0A;color:#fff;">
+        <th style="text-align:left;padding:7px 10px;font-size:9px;text-transform:uppercase;letter-spacing:.06em">Artigo</th>
+        <th style="text-align:right;padding:7px 10px;font-size:9px;text-transform:uppercase">Qtd</th>
+        ${isCot?'<th style="text-align:right;padding:7px 10px;font-size:9px;text-transform:uppercase">Preço unit.</th><th style="text-align:right;padding:7px 10px;font-size:9px;text-transform:uppercase">Subtotal</th>':''}
+      </tr></thead>
+      <tbody>${doc.itens.map((it,i)=>`
+        <tr style="background:${i%2===0?'#fff':'#FAF4E8'};border-bottom:1px solid #E8DCC8;page-break-inside:avoid;">
+          <td style="padding:7px 10px;color:#3B1F0A;">${it.nome}</td>
+          <td style="padding:7px 10px;text-align:right;">${it.qtd}</td>
+          ${isCot?`<td style="padding:7px 10px;text-align:right;">${fmtMZN(it.preco)}</td><td style="padding:7px 10px;text-align:right;font-weight:600;">${fmtMZN(it.qtd*it.preco)}</td>`:''}
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    ${isCot?`<div style="display:flex;justify-content:flex-end;margin-bottom:40px"><div style="background:#3B1F0A;color:#D4A017;padding:10px 18px;font-size:16px;display:flex;gap:40px;min-width:220px;justify-content:space-between"><span>TOTAL</span><span>${fmtMZN(doc.total)}</span></div></div>`:''}
+    ${!isCot&&doc.valorTotal?`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+      <div style="font-family:system-ui;font-size:12px;min-width:260px">
+        <div style="display:flex;justify-content:space-between;padding:6px 12px;background:#F5EDD8"><span>Valor total</span><strong>${fmtMZN(doc.valorTotal)}</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 12px;color:#4A7A3A"><span>Valor pago</span><strong>${fmtMZN(doc.valorPago||0)}</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 12px;background:#3B1F0A;color:#D4A017"><span>Valor em falta</span><strong>${fmtMZN(Math.max(0,(doc.valorTotal||0)-(doc.valorPago||0)))}</strong></div>
+      </div>
+    </div>`:''}
+    <div style="display:flex;justify-content:space-between;margin-top:40px;font-family:system-ui;font-size:11px;color:#7A6040;page-break-inside:avoid;">
+      <div style="text-align:center;width:42%"><div style="border-top:1px solid #3B1F0A;padding-top:6px">Assinatura — Fashion Decor</div></div>
+      <div style="text-align:center;width:42%"><div style="border-top:1px solid #3B1F0A;padding-top:6px">Assinatura — Cliente</div></div>
+    </div>
+    <div style="margin-top:24px;font-size:8px;color:#C9B48A;font-family:system-ui;text-align:center;border-top:1px solid #E8DCC8;padding-top:8px;page-break-inside:avoid;">© ${yr} Fashion Decor · Todos os direitos reservados · (FDC)</div>
+  </div>`;}
+
+window.pCot=id=>{
+  const c=S.cotacoes.find(x=>x.id===id);if(!c)return;
+  const itens=S.cotItens.filter(i=>i.cotacao_id===id).map(i=>({nome:i.nome,qtd:i.quantidade,preco:i.preco_unit}));
+  document.getElementById('pa').innerHTML=buildPrint({tipo:'cotacao',numero:id.slice(0,6).toUpperCase(),data:c.criado_em?c.criado_em.slice(0,10):'—',cliente:c.cliente,evento:c.evento,itens,total:c.total});
+  // Suprimir URL e cabeçalhos do browser via estilo injectado
+  const sty=document.createElement('style');
+  sty.id='print-override';
+  sty.textContent='@page{margin:0;size:A4 portrait;}@page :first{margin:0;}@page :left{margin:0;}@page :right{margin:0;}@media print{body>*{display:none!important;}#pa{display:block!important;position:absolute;left:0;top:0;width:100%;padding:15mm 18mm;background:#fff;}}';
+  document.head.appendChild(sty);
+  setTimeout(()=>{window.print();setTimeout(()=>{const s=document.getElementById('print-override');if(s)s.remove();},500);},150);};
+window.pRecibo=id=>{
+  const a=S.alugueis.find(x=>x.id===id);if(!a)return;
+  const itens=S.aluguerItens.filter(i=>i.aluguer_id===id).map(i=>({nome:i.nome,qtd:i.quantidade}));
+  document.getElementById('pa').innerHTML=buildPrint({tipo:'recibo',numero:id.slice(0,6).toUpperCase(),data:a.data_saida||today(),cliente:a.cliente,armazem:a.armazem,dataPrevista:a.data_prevista,valorTotal:a.valor_total,valorPago:a.valor_pago,itens:itens.length>0?itens:[{nome:'—',qtd:1}]});
+  const sty=document.createElement('style');
+  sty.id='print-override';
+  sty.textContent='@page{margin:0;size:A4 portrait;}@page :first{margin:0;}@page :left{margin:0;}@page :right{margin:0;}@media print{body>*{display:none!important;}#pa{display:block!important;position:absolute;left:0;top:0;width:100%;padding:15mm 18mm;background:#fff;}}';
+  document.head.appendChild(sty);
+  setTimeout(()=>{window.print();setTimeout(()=>{const s=document.getElementById('print-override');if(s)s.remove();},500);},150);};
+
+// ══════════════════════════════════════════════
+// PWA MANIFEST
+// ══════════════════════════════════════════════
+const mf={name:"Fashion Decor",short_name:"FashionDecor",start_url:".",display:"standalone",background_color:"#2C1506",theme_color:"#2C1506",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='38' fill='%232C1506'/%3E%3Ccircle cx='96' cy='96' r='72' fill='%23D4A017'/%3E%3Ctext x='96' y='120' text-anchor='middle' font-size='60' font-weight='900' font-family='Georgia' fill='%233B1F0A'%3EFD%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
+const mb=new Blob([JSON.stringify(mf)],{type:'application/json'});
+const ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(mb);document.head.appendChild(ml);
+
+// ══════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
